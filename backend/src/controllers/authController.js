@@ -19,12 +19,14 @@ const register = async (req, res, next) => {
     }
 
     // Create user — generate a tenantId if not provided
+    // (For this demo, we force everyone into a single shared tenant so you can easily test roles)
+    // In a production app, this would remain a unique uuidv4() or an assigned ID from an invite link.
     const user = await User.create({
       username,
       email,
       password,
       role: role || 'editor',
-      tenantId: tenantId || uuidv4(),
+      tenantId: tenantId || 'pulse-demo-tenant-id',
     });
 
     // Generate token
